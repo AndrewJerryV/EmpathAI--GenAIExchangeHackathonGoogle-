@@ -50,7 +50,7 @@ gr.Interface(
     ),
     outputs=gr.Textbox(label="Bot's Response"),
     title="🌿 Gemini AI Mental Health Support Chatbot",
-    description="A virtual assistant providing empathetic emotional support to students. Personalized and powered by Google Gemini AI.",
+    description="A virtual assistant providing empathetic emotional support to students. FOR GEN AI EXCHANGE HACKATHON BY GOOGLE !",
     examples=[
         "I'm feeling really stressed about my exams.",
         "I don't know how to deal with all this anxiety.",
