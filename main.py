@@ -4,6 +4,7 @@ import gradio as gr
 from time import sleep
 from transformers import pipeline
 import config
+import re
 
 genai.configure(api_key=config.api_key)
 model = genai.GenerativeModel("gemini-pro")
@@ -34,8 +35,9 @@ def generate_empathic_response(user_input):
         extracted_text = response.split('"')[1] if '"' in response else response
     else:
         extracted_text = "I'm sorry, I couldn't process that."
+    extracted_text = re.sub(r'\*\*.*?\*\*', '', extracted_text, flags=re.DOTALL)
 
-    return extracted_text
+    return  re.sub(r'\* \*\*.*?\*\*', '', extracted_text, flags=re.DOTALL)
 
 def chatbot_interface(user_input):
     print("Bot is typing...")
@@ -47,6 +49,7 @@ theme = gr.themes.Soft(
     secondary_hue="slate",
     neutral_hue="emerald",
 )
+
 gr.Interface(
     fn=chatbot_interface,
     inputs=gr.Textbox(
@@ -63,6 +66,5 @@ gr.Interface(
         "I feel overwhelmed with school and life."
     ],
     theme=theme,
-    # css=".gradio-container {background-color: white}",
     allow_flagging="never",
 ).launch(share=True)
