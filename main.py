@@ -3,8 +3,9 @@ import os
 import gradio as gr
 from time import sleep
 from transformers import pipeline
+import config
 
-genai.configure(api_key="AIzaSyAA179g3BG3vkfOoAo1a2ty6gSjMjPYbQ4")
+genai.configure(api_key=config.api_key)
 model = genai.GenerativeModel("gemini-pro")
 sentiment_analyzer = pipeline("sentiment-analysis")
 
@@ -29,7 +30,12 @@ def generate_empathic_response(user_input):
     
     response = generate_response(prompt)
     sleep(1.5)  
-    return response
+    if response:
+        extracted_text = response.split('"')[1] if '"' in response else response
+    else:
+        extracted_text = "I'm sorry, I couldn't process that."
+
+    return extracted_text
 
 def chatbot_interface(user_input):
     print("Bot is typing...")
